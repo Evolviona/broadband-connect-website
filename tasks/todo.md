@@ -235,3 +235,23 @@ The Broadband Connect website is now ready for successful Vercel deployment!
 - **Deployment Ready**: Vercel-optimized build configuration
 
 **The Broadband Connect website is now a professional, conversion-focused platform ready for telecommunications training lead generation!**
+
+## CSS Module Build Error Fix:
+### ⚠️ Issue Encountered:
+- **CSS Module Error**: `:root` selector not allowed in CSS Modules (must be pure/local)
+- **Build Failure**: Webpack couldn't compile Hero.module.css with global selectors
+
+### ✅ Fix Applied:
+- **Removed :root Selectors**: Eliminated global CSS variable declarations
+- **Direct Color Values**: Replaced CSS variables with hardcoded color values
+- **Theme Support**: Used `:global(.dark)` wrapper for dark mode styles
+- **Color Implementation**:
+  - Light theme fiber: `#4169E1` (bc-accent-royal-blue)
+  - Dark theme fiber: `#37356A` (bc-accent-deep-blue)  
+  - Pulse color: `#0B8FE5` (bc-primary)
+
+### 🎯 Technical Solution:
+- CSS Modules require all selectors to be local/scoped
+- Used `:global()` wrapper for dark mode class targeting
+- Maintained theme switching functionality without CSS variables
+- Build now completes successfully without webpack errors

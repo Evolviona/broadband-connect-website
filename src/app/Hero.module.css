@@ -1,7 +1,6 @@
 /* Hero Container */
 .heroContainer {
   position: relative;
-  background: var(--hero-bg);
 }
 
 /* Fiber Optic Background */
@@ -20,13 +19,27 @@
   top: 0;
   width: 2px;
   height: 100%;
+  opacity: 0.6;
+}
+
+/* Light theme strands */
+.fiberStrand {
   background: linear-gradient(180deg, 
     transparent 0%, 
-    var(--fiber-color) 20%, 
-    var(--fiber-color) 80%, 
+    #4169E1 20%, 
+    #4169E1 80%, 
     transparent 100%
   );
-  opacity: 0.6;
+}
+
+/* Dark theme strands */
+:global(.dark) .fiberStrand {
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    #37356A 20%, 
+    #37356A 80%, 
+    transparent 100%
+  );
 }
 
 .fiberStrand::before {
@@ -34,9 +47,9 @@
   position: absolute;
   width: 6px;
   height: 20px;
-  background: var(--pulse-color);
+  background: #0B8FE5;
   border-radius: 50%;
-  box-shadow: 0 0 15px var(--pulse-color), 0 0 30px var(--pulse-color);
+  box-shadow: 0 0 15px #0B8FE5, 0 0 30px #0B8FE5;
   animation: fiberPulse var(--duration) ease-in-out infinite;
   animation-delay: var(--delay);
   left: -2px;
@@ -84,20 +97,6 @@
     transform: translateY(calc(100vh + 100%));
     opacity: 0;
   }
-}
-
-/* Light Mode Variables */
-:root {
-  --hero-bg: var(--bc-light-bg);
-  --fiber-color: #4169E1; /* bc-accent-royal-blue */
-  --pulse-color: #0B8FE5; /* bc-primary */
-}
-
-/* Dark Mode Variables */
-:root.dark {
-  --hero-bg: var(--bc-dark-bg);
-  --fiber-color: #37356A; /* bc-accent-deep-blue */
-  --pulse-color: #0B8FE5; /* bc-primary */
 }
 
 /* Reduced Motion Support */
