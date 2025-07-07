@@ -1,15 +1,24 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [navHoverHandler, setNavHoverHandler] = useState(null)
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
+
+  // Get hover handler from window if available
+  useEffect(() => {
+    const handler = window?.fiberNavHoverHandler
+    if (handler) {
+      setNavHoverHandler(() => handler)
+    }
+  }, [])
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -19,7 +28,11 @@ export default function Navigation() {
   ]
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-bc-light-bg/80 dark:bg-bc-dark-bg/80 backdrop-blur-md border-b border-bc-light-text/10 dark:border-bc-dark-text/10 shadow-lg shadow-black/5 dark:shadow-black/20">
+    <nav 
+      className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/10 backdrop-blur-md border-b border-white/20 dark:border-white/10 ring-1 ring-white/20 dark:ring-white/10 shadow-2xl shadow-black/10 dark:shadow-black/30"
+      onMouseEnter={() => navHoverHandler?.(true)}
+      onMouseLeave={() => navHoverHandler?.(false)}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -79,7 +92,7 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       <div className={`md:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 bg-bc-light-bg/90 dark:bg-bc-dark-bg/90 backdrop-blur-md border-t border-bc-light-text/10 dark:border-bc-dark-text/10 shadow-lg shadow-black/10 dark:shadow-black/30">
+        <div className="px-2 pt-2 pb-3 space-y-1 bg-white/90 dark:bg-black/20 backdrop-blur-md border-t border-white/20 dark:border-white/10 ring-1 ring-white/20 dark:ring-white/10 shadow-2xl shadow-black/10 dark:shadow-black/30">
           {navItems.map((item) => (
             <Link
               key={item.name}

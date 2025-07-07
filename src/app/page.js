@@ -1,17 +1,17 @@
+'use client'
+
 import Link from 'next/link'
-import styles from './Hero.module.css'
 import Image from 'next/image'
+import { useState } from 'react'
+import FiberAnimation from '@/components/FiberAnimation/FiberAnimation'
 
 export default function Home() {
+  const [hoverHandlers, setHoverHandlers] = useState(null)
+
   return (
-    <section className={`${styles.heroContainer} relative min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden`}>
+    <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden">
       {/* Fiber Optic Background */}
-      <div className={styles.fiberBackground}>
-        <div className={`${styles.fiberStrand} ${styles.strand1}`}></div>
-        <div className={`${styles.fiberStrand} ${styles.strand2}`}></div>
-        <div className={`${styles.fiberStrand} ${styles.strand3}`}></div>
-        <div className={`${styles.fiberStrand} ${styles.strand4}`}></div>
-      </div>
+      <FiberAnimation onHoverHandlers={setHoverHandlers} />
 
       {/* Hero Content */}
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6 sm:px-12 lg:px-24">
@@ -28,12 +28,16 @@ export default function Home() {
           <Link
             href="/courses"
             className="bg-bc-primary hover:bg-bc-primary/90 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            onMouseEnter={() => hoverHandlers?.handleCTAHover?.(true)}
+            onMouseLeave={() => hoverHandlers?.handleCTAHover?.(false)}
           >
             View Courses
           </Link>
           <Link
             href="/enrol"
             className="border-2 border-bc-secondary text-bc-secondary hover:bg-bc-secondary hover:text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105"
+            onMouseEnter={() => hoverHandlers?.handleCTAHover?.(true)}
+            onMouseLeave={() => hoverHandlers?.handleCTAHover?.(false)}
           >
             Get Started
           </Link>
