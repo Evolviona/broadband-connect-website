@@ -19,7 +19,7 @@ export default function Navigation() {
   ]
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-bc-light-bg/90 dark:bg-bc-dark-bg/90 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-bc-light-bg/80 dark:bg-bc-dark-bg/80 backdrop-blur-md border-b border-bc-light-text/10 dark:border-bc-dark-text/10 shadow-lg shadow-black/5 dark:shadow-black/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -79,7 +79,7 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       <div className={`md:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 bg-bc-light-bg dark:bg-bc-dark-bg border-t border-gray-200 dark:border-gray-700">
+        <div className="px-2 pt-2 pb-3 space-y-1 bg-bc-light-bg/90 dark:bg-bc-dark-bg/90 backdrop-blur-md border-t border-bc-light-text/10 dark:border-bc-dark-text/10 shadow-lg shadow-black/10 dark:shadow-black/30">
           {navItems.map((item) => (
             <Link
               key={item.name}

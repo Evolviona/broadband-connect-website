@@ -1,37 +1,80 @@
+import Link from 'next/link'
+import styles from './Hero.module.css'
+import Image from 'next/image'
+
 export default function Home() {
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center p-6 sm:p-12 lg:p-24">
-      <div className="text-center max-w-4xl mx-auto">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-bc-light-text dark:text-bc-dark-text">
-          Broadband Connect
+    <section className={`${styles.heroContainer} relative min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden`}>
+      {/* Fiber Optic Background */}
+      <div className={styles.fiberBackground}>
+        <div className={`${styles.fiberStrand} ${styles.strand1}`}></div>
+        <div className={`${styles.fiberStrand} ${styles.strand2}`}></div>
+        <div className={`${styles.fiberStrand} ${styles.strand3}`}></div>
+        <div className={`${styles.fiberStrand} ${styles.strand4}`}></div>
+      </div>
+
+      {/* Hero Content */}
+      <div className="relative z-10 text-center max-w-4xl mx-auto px-6 sm:px-12 lg:px-24">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-bc-light-text dark:text-bc-dark-text font-playfair">
+          Powering the Next Generation of Technicians
         </h1>
-        <h2 className="text-2xl md:text-3xl mb-8 text-bc-primary font-playfair">
-          Coming Soon
-        </h2>
-        <p className="text-lg md:text-xl mb-8 text-bc-light-text/80 dark:text-bc-dark-text/80 font-inter">
-          Professional telecommunications training that builds careers
+        
+        <p className="text-lg sm:text-xl lg:text-2xl mb-12 text-bc-light-text/90 dark:text-bc-dark-text/90 font-inter max-w-3xl mx-auto">
+          Accredited Telecommunications Training. Hands-On. Industry Ready.
         </p>
         
-        {/* Color palette preview */}
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
-          <div className="bg-bc-primary h-16 rounded-lg flex items-center justify-center text-white text-sm font-medium">
-            Primary
-          </div>
-          <div className="bg-bc-secondary h-16 rounded-lg flex items-center justify-center text-white text-sm font-medium">
-            Secondary
-          </div>
-          <div className="bg-bc-accent-deep-blue h-16 rounded-lg flex items-center justify-center text-white text-sm font-medium">
-            Deep Blue
-          </div>
-          <div className="bg-bc-accent-royal-blue h-16 rounded-lg flex items-center justify-center text-white text-sm font-medium">
-            Royal Blue
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+          <Link
+            href="/courses"
+            className="bg-bc-primary hover:bg-bc-primary/90 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          >
+            View Courses
+          </Link>
+          <Link
+            href="/enrol"
+            className="border-2 border-bc-secondary text-bc-secondary hover:bg-bc-secondary hover:text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105"
+          >
+            Get Started
+          </Link>
+        </div>
+
+        {/* Trust Badges */}
+        <div className="flex flex-col items-center">
+          <p className="text-sm text-bc-light-text/70 dark:text-bc-dark-text/70 mb-4 font-inter">
+            Nationally Recognised Training
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8">
+            <div className="flex items-center opacity-80 hover:opacity-100 transition-opacity">
+              <Image
+                src="/assets/Australian Qalification Framework.svg"
+                alt="Australian Qualifications Framework"
+                width={60}
+                height={60}
+                className="filter brightness-0 dark:brightness-100"
+              />
+            </div>
+            <div className="flex items-center opacity-80 hover:opacity-100 transition-opacity">
+              <Image
+                src="/assets/Nationally Recognised Training.svg"
+                alt="Nationally Recognised Training"
+                width={60}
+                height={60}
+                className="filter brightness-0 dark:brightness-100"
+              />
+            </div>
+            <div className="flex items-center opacity-80 hover:opacity-100 transition-opacity">
+              <Image
+                src="/assets/skills-assure.svg"
+                alt="Skills Assure"
+                width={60}
+                height={60}
+                className="filter brightness-0 dark:brightness-100"
+              />
+            </div>
           </div>
         </div>
-        
-        <p className="mt-8 text-sm text-bc-light-text/60 dark:text-bc-dark-text/60">
-          Toggle the theme using the navigation bar
-        </p>
       </div>
-    </div>
+    </section>
   )
 }

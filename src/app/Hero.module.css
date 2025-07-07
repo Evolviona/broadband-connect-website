@@ -1,0 +1,113 @@
+/* Hero Container */
+.heroContainer {
+  position: relative;
+  background: var(--hero-bg);
+}
+
+/* Fiber Optic Background */
+.fiberBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.fiberStrand {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    var(--fiber-color) 20%, 
+    var(--fiber-color) 80%, 
+    transparent 100%
+  );
+  opacity: 0.6;
+}
+
+.fiberStrand::before {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 20px;
+  background: var(--pulse-color);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--pulse-color), 0 0 30px var(--pulse-color);
+  animation: fiberPulse var(--duration) ease-in-out infinite;
+  animation-delay: var(--delay);
+  left: -2px;
+  will-change: transform;
+}
+
+/* Strand Positioning */
+.strand1 {
+  left: 20%;
+  --duration: 8s;
+  --delay: 0s;
+}
+
+.strand2 {
+  left: 40%;
+  --duration: 10s;
+  --delay: 2s;
+}
+
+.strand3 {
+  left: 60%;
+  --duration: 12s;
+  --delay: 4s;
+}
+
+.strand4 {
+  left: 80%;
+  --duration: 9s;
+  --delay: 6s;
+}
+
+/* Pulse Animation */
+@keyframes fiberPulse {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(calc(100vh + 100%));
+    opacity: 0;
+  }
+}
+
+/* Light Mode Variables */
+:root {
+  --hero-bg: var(--bc-light-bg);
+  --fiber-color: #4169E1; /* bc-accent-royal-blue */
+  --pulse-color: #0B8FE5; /* bc-primary */
+}
+
+/* Dark Mode Variables */
+:root.dark {
+  --hero-bg: var(--bc-dark-bg);
+  --fiber-color: #37356A; /* bc-accent-deep-blue */
+  --pulse-color: #0B8FE5; /* bc-primary */
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .fiberStrand::before {
+    animation: none;
+    display: none;
+  }
+  
+  .fiberStrand {
+    opacity: 0.2;
+  }
+}
