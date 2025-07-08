@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import FiberAnimation from '@/components/FiberAnimation/FiberAnimation'
+import FeaturedCourses from '@/components/sections/FeaturedCourses'
 
 export default function Home() {
   const [hoverHandlers, setHoverHandlers] = useState(null)
@@ -80,5 +81,6 @@ export default function Home() {
         </div>
       </div>
     </section>
+    <FeaturedCourses />
   )
 }

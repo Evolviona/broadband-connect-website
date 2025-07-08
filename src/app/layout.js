@@ -1,5 +1,6 @@
 import './globals.css'
 import Navigation from '@/components/Navigation/Navigation'
+import ScrollProgress from '@/components/ui/ScrollProgress'
 
 export const metadata = {
   title: 'Broadband Connect - Telecommunications Training',
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <div className="min-h-screen">
           <Navigation />
+          <ScrollProgress position="top" variant="fiber" />
           <main className="pt-16">
             {children}
           </main>
