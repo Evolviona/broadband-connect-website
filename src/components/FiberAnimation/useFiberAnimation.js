@@ -102,8 +102,10 @@ export function useFiberAnimation() {
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
+      // Store ref value in local variable for cleanup
+      const animationFrame = animationRef.current
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame)
       }
     }
   }, [])

@@ -117,6 +117,14 @@ export function useStaggeredAnimation(itemCount, options = {}) {
   return { ref, inView, isItemVisible }
 }
 
+// Easing functions defined outside component to avoid recreation
+const easingFunctions = {
+  easeOutQuart: (t) => 1 - Math.pow(1 - t, 4),
+  easeOutCubic: (t) => 1 - Math.pow(1 - t, 3),
+  easeOutExpo: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t),
+  linear: (t) => t,
+}
+
 // Hook for scroll-triggered counter animations
 export function useCounterAnimation(target, options = {}) {
   const {
@@ -129,13 +137,6 @@ export function useCounterAnimation(target, options = {}) {
   const { ref, inView } = useScrollAnimation({ threshold, triggerOnce: true })
   const frameRef = useRef()
   const startTimeRef = useRef()
-
-  const easingFunctions = {
-    easeOutQuart: (t) => 1 - Math.pow(1 - t, 4),
-    easeOutCubic: (t) => 1 - Math.pow(1 - t, 3),
-    easeOutExpo: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t),
-    linear: (t) => t,
-  }
 
   const animate = useCallback((currentTime) => {
     if (!startTimeRef.current) {

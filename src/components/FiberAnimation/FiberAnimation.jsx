@@ -76,6 +76,9 @@ export default function FiberAnimation({ onHoverHandlers }) {
 
   // Calculate proximity effect for each fiber
   const getProximityEffect = (fiberPosition) => {
+    // Guard against SSR where window is not available
+    if (typeof window === 'undefined') return 0
+    
     const fiberX = (fiberPosition / 100) * window.innerWidth
     const distance = Math.abs(mousePosition.x - fiberX)
     const maxDistance = 200
