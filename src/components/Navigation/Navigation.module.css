@@ -1,0 +1,221 @@
+/* Enhanced Navigation with True Glassmorphism */
+.nav {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: background-color, backdrop-filter, box-shadow;
+}
+
+.nav.dark {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Scroll-based opacity transitions */
+.nav.scrolled {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(24px);
+  box-shadow: 
+    0 12px 40px 0 rgba(31, 38, 135, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.nav.scrolled.dark {
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 12px 40px 0 rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Navigation items with enhanced hover effects */
+.navItem {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.navItem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(11, 143, 229, 0.1) 0%,
+    rgba(251, 134, 134, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.navItem:hover::before {
+  opacity: 1;
+}
+
+.navItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 20px rgba(11, 143, 229, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* CTA button with enhanced glow effects */
+.ctaButton {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    #0B8FE5 0%,
+    #4169E1 100%
+  );
+  box-shadow: 
+    0 4px 16px rgba(11, 143, 229, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.ctaButton::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    45deg,
+    #0B8FE5,
+    #4169E1,
+    #FB8686,
+    #0B8FE5
+  );
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+.ctaButton:hover::before {
+  opacity: 1;
+}
+
+.ctaButton:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 8px 32px rgba(11, 143, 229, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile menu enhancements */
+.mobileMenu {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 16px 48px 0 rgba(31, 38, 135, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.mobileMenu.dark {
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 16px 48px 0 rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.mobileMenuItem {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  margin: 2px 0;
+}
+
+.mobileMenuItem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(11, 143, 229, 0.1) 0%,
+    rgba(251, 134, 134, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.mobileMenuItem:hover::before {
+  opacity: 1;
+}
+
+/* Hamburger menu animation */
+.hamburgerLine {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: currentColor;
+  transform-origin: center;
+}
+
+.hamburgerLine.open:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburgerLine.open:nth-child(2) {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.hamburgerLine.open:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Border glow animation */
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .nav {
+    backdrop-filter: blur(16px);
+  }
+  
+  .navItem:hover {
+    transform: none;
+  }
+  
+  .ctaButton:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* Performance optimizations */
+.nav,
+.navItem,
+.ctaButton,
+.mobileMenu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}

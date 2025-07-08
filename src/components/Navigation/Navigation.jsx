@@ -3,10 +3,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
+import styles from './Navigation.module.css'
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [navHoverHandler, setNavHoverHandler] = useState(null)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isDark, setIsDark] = useState(false)
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -20,6 +23,34 @@ export default function Navigation() {
     }
   }, [])
 
+  // Handle scroll effects
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Detect theme changes
+  useEffect(() => {
+    const checkTheme = () => {
+      setIsDark(document.documentElement.classList.contains('dark'))
+    }
+    
+    checkTheme()
+    
+    // Watch for theme changes
+    const observer = new MutationObserver(checkTheme)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
+    
+    return () => observer.disconnect()
+  }, [])
+
   const navItems = [
     { name: 'Home', href: '/' },
     { name: 'Courses', href: '/courses' },
@@ -27,9 +58,16 @@ export default function Navigation() {
     { name: 'Contact', href: '/contact' },
   ]
 
+  const navClasses = `
+    fixed top-0 left-0 right-0 z-50 
+    ${styles.nav} 
+    ${isScrolled ? styles.scrolled : ''} 
+    ${isDark ? styles.dark : ''}
+  `.trim()
+
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/10 backdrop-blur-md border-b border-white/20 dark:border-white/10 ring-1 ring-white/20 dark:ring-white/10 shadow-2xl shadow-black/10 dark:shadow-black/30"
+      className={navClasses}
       onMouseEnter={() => navHoverHandler?.(true)}
       onMouseLeave={() => navHoverHandler?.(false)}
     >
@@ -49,7 +87,7 @@ export default function Navigation() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-bc-light-text dark:text-bc-dark-text hover:text-bc-primary dark:hover:text-bc-primary transition-colors duration-200 px-3 py-2 text-sm font-medium"
+                  className={`${styles.navItem} text-bc-light-text dark:text-bc-dark-text hover:text-bc-primary dark:hover:text-bc-primary transition-colors duration-200 px-3 py-2 text-sm font-medium`}
                 >
                   {item.name}
                 </Link>
@@ -58,7 +96,7 @@ export default function Navigation() {
               {/* Enrol Now Button */}
               <Link
                 href="/enrol"
-                className="bg-bc-primary hover:bg-bc-primary/90 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                className={`${styles.ctaButton} text-white px-4 py-2 rounded-md text-sm font-medium`}
               >
                 Enrol Now
               </Link>
@@ -81,9 +119,9 @@ export default function Navigation() {
             >
               <span className="sr-only">Open main menu</span>
               <div className="space-y-1">
-                <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
-                <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></div>
-                <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
+                <div className={`${styles.hamburgerLine} w-6 h-0.5 bg-current ${isMobileMenuOpen ? styles.open : ''}`}></div>
+                <div className={`${styles.hamburgerLine} w-6 h-0.5 bg-current ${isMobileMenuOpen ? styles.open : ''}`}></div>
+                <div className={`${styles.hamburgerLine} w-6 h-0.5 bg-current ${isMobileMenuOpen ? styles.open : ''}`}></div>
               </div>
             </button>
           </div>
@@ -92,12 +130,12 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       <div className={`md:hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 bg-white/90 dark:bg-black/20 backdrop-blur-md border-t border-white/20 dark:border-white/10 ring-1 ring-white/20 dark:ring-white/10 shadow-2xl shadow-black/10 dark:shadow-black/30">
+        <div className={`${styles.mobileMenu} ${isDark ? styles.dark : ''} px-2 pt-2 pb-3 space-y-1`}>
           {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-bc-light-text dark:text-bc-dark-text hover:text-bc-primary dark:hover:text-bc-primary block px-3 py-2 text-base font-medium transition-colors duration-200"
+              className={`${styles.mobileMenuItem} text-bc-light-text dark:text-bc-dark-text hover:text-bc-primary dark:hover:text-bc-primary block px-3 py-2 text-base font-medium transition-colors duration-200`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {item.name}
@@ -107,7 +145,7 @@ export default function Navigation() {
           {/* Mobile Enrol Now Button */}
           <Link
             href="/enrol"
-            className="bg-bc-primary hover:bg-bc-primary/90 text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 mt-2"
+            className={`${styles.ctaButton} text-white block px-3 py-2 rounded-md text-base font-medium mt-2`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Enrol Now

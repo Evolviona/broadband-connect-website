@@ -1,4 +1,4 @@
-/* Fiber Animation Container */
+/* Advanced Fiber Animation Container */
 .fiberContainer {
   position: absolute;
   top: 0;
@@ -8,52 +8,205 @@
   z-index: 1;
   overflow: hidden;
   pointer-events: none;
+  perspective: 1000px;
+}
+
+/* Background gradient overlay */
+.backgroundGradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(11, 143, 229, 0.02) 0%,
+    rgba(65, 105, 225, 0.03) 30%,
+    rgba(251, 134, 134, 0.02) 60%,
+    rgba(55, 53, 106, 0.03) 100%
+  );
+  animation: backgroundShift 20s ease-in-out infinite;
+  z-index: -1;
 }
 
 /* Individual Fiber Strand */
 .fiberStrand {
   position: absolute;
   top: 0;
-  width: 2px;
   height: 100%;
-  opacity: 0.6;
-  will-change: transform;
+  opacity: 0.8;
+  will-change: transform, filter, box-shadow;
+  transform-style: preserve-3d;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced animated state */
+.fiberStrand.animated {
+  animation: fiberWave var(--animation-duration, 10s) ease-in-out infinite;
+  animation-delay: var(--animation-delay, 0s);
 }
 
 /* Static version for reduced motion */
 .fiberStrand.static {
-  opacity: 0.2;
+  opacity: 0.3;
+  animation: none;
 }
 
-/* Pulse Element */
+/* Primary Pulse Element */
 .pulse {
   position: absolute;
-  width: 6px;
-  height: 20px;
   border-radius: 50%;
-  left: -2px;
   top: 0;
-  transition: all 2s ease-in-out;
+  will-change: transform, opacity, box-shadow;
+  transform-origin: center;
+  z-index: 2;
+}
+
+/* Secondary pulse for layered effect */
+.secondaryPulse {
+  position: absolute;
+  border-radius: 50%;
+  top: 50px;
   will-change: transform, opacity;
+  transform-origin: center;
+  z-index: 1;
+}
+
+/* Glow effect for proximity interactions */
+.glowEffect {
+  position: absolute;
+  top: 0;
+  pointer-events: none;
+  will-change: opacity;
+  z-index: 0;
+}
+
+/* Wave animation for fiber strands */
+@keyframes fiberWave {
+  0%, 100% {
+    transform: translateX(0) rotateZ(0deg);
+  }
+  25% {
+    transform: translateX(2px) rotateZ(0.5deg);
+  }
+  50% {
+    transform: translateX(0) rotateZ(0deg);
+  }
+  75% {
+    transform: translateX(-2px) rotateZ(-0.5deg);
+  }
+}
+
+/* Background gradient animation */
+@keyframes backgroundShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Pulse travel animation */
+@keyframes pulseTravel {
+  0% {
+    transform: translateY(-100%) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(calc(100vh + 100%)) scale(1.2);
+    opacity: 0;
+  }
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .fiberStrand {
-    width: 1.5px;
+    opacity: 0.6;
+  }
+  
+  .fiberStrand.animated {
+    animation-duration: calc(var(--animation-duration, 10s) * 0.8);
+  }
+  
+  .pulse {
+    transform: scale(0.8);
+  }
+  
+  .backgroundGradient {
+    opacity: 0.7;
+  }
+}
+
+@media (max-width: 480px) {
+  .fiberStrand {
     opacity: 0.4;
   }
   
   .pulse {
-    width: 4px;
-    height: 15px;
-    left: -1.25px;
+    transform: scale(0.6);
+  }
+  
+  .backgroundGradient {
+    opacity: 0.5;
+  }
+}
+
+/* High performance mode for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .fiberStrand,
+  .pulse,
+  .secondaryPulse,
+  .backgroundGradient {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .fiberStrand {
+    opacity: 0.2;
+  }
+  
+  .pulse,
+  .secondaryPulse {
+    display: none;
   }
 }
 
 /* Performance optimizations */
+.fiberContainer,
 .fiberStrand,
-.pulse {
+.pulse,
+.secondaryPulse,
+.glowEffect,
+.backgroundGradient {
   transform: translateZ(0);
   backface-visibility: hidden;
+}
+
+/* Dark mode adjustments */
+:global(.dark) .backgroundGradient {
+  background: linear-gradient(
+    135deg,
+    rgba(55, 53, 106, 0.03) 0%,
+    rgba(11, 143, 229, 0.02) 30%,
+    rgba(251, 134, 134, 0.02) 60%,
+    rgba(28, 28, 28, 0.04) 100%
+  );
+}
+
+/* Enhanced glow effects for dark mode */
+:global(.dark) .fiberStrand {
+  filter: brightness(1.2) contrast(1.1);
+}
+
+/* Hover states for interactive elements */
+.fiberStrand:hover {
+  opacity: 1;
+  transform: scale(1.05);
 }

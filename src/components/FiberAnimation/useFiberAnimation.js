@@ -41,17 +41,31 @@ export function useFiberAnimation() {
     setHoveredElement(isHovering ? 'nav' : null)
   }, [])
 
-  // Calculate fiber positions based on viewport
+  // Calculate fiber positions with 7 advanced strands
   const fiberPositions = useMemo(() => {
     const width = typeof window !== 'undefined' ? window.innerWidth : 1200
     const isMobile = width < 768
-    const count = isMobile ? 3 : Math.min(6, Math.max(4, Math.floor(width / 300)))
+    const isTablet = width < 1024
     
-    return Array.from({ length: count }, (_, i) => ({
-      id: i,
-      left: `${(100 / (count + 1)) * (i + 1)}%`,
-      delay: i * 2000, // Stagger timing
-      speed: 8000 + (i % 3) * 2000, // Variable speeds
+    // Define 7 strands with varied properties
+    const fullStrands = [
+      { id: 0, left: 8, delay: 0, speed: 8000, thickness: 2 },
+      { id: 1, left: 18, delay: 1500, speed: 10000, thickness: 3 },
+      { id: 2, left: 32, delay: 3000, speed: 12000, thickness: 4 },
+      { id: 3, left: 48, delay: 4500, speed: 9000, thickness: 3 },
+      { id: 4, left: 64, delay: 6000, speed: 11000, thickness: 2 },
+      { id: 5, left: 78, delay: 2000, speed: 13000, thickness: 4 },
+      { id: 6, left: 92, delay: 5000, speed: 7000, thickness: 3 },
+    ]
+    
+    // Adjust count based on viewport
+    let count = fullStrands.length
+    if (isMobile) count = 4
+    else if (isTablet) count = 5
+    
+    return fullStrands.slice(0, count).map((strand, i) => ({
+      ...strand,
+      left: `${strand.left}%`,
     }))
   }, [])
 

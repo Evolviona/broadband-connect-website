@@ -1,0 +1,173 @@
+/* Particle System Container */
+.particleContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  perspective: 1000px;
+}
+
+.particleWrapper {
+  position: absolute;
+  will-change: transform;
+}
+
+/* Individual Particle */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform, opacity;
+  transform-origin: center;
+  transition: opacity 1s ease-in;
+  z-index: 1;
+}
+
+/* Floating animation for particles */
+.particle.floating {
+  animation: floatParticle var(--speed, 15s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Floating keyframes with random movement */
+@keyframes floatParticle {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translate(20px, -30px) rotate(90deg) scale(1.1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-15px, -60px) rotate(180deg) scale(0.9);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(25px, -30px) rotate(270deg) scale(1.05);
+    opacity: 0.7;
+  }
+}
+
+/* Alternative floating pattern for variety */
+@keyframes floatParticleAlt {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.5;
+  }
+  33% {
+    transform: translate(-25px, -20px) rotate(120deg) scale(1.2);
+    opacity: 0.9;
+  }
+  66% {
+    transform: translate(20px, -40px) rotate(240deg) scale(0.8);
+    opacity: 0.7;
+  }
+}
+
+/* Pulse animation for enhanced glow */
+@keyframes particlePulse {
+  0%, 100% {
+    filter: brightness(1) blur(0px);
+    transform: scale(1);
+  }
+  50% {
+    filter: brightness(1.5) blur(1px);
+    transform: scale(1.1);
+  }
+}
+
+/* Apply different animations to create variety */
+.particle:nth-child(odd) {
+  animation-name: floatParticle;
+}
+
+.particle:nth-child(even) {
+  animation-name: floatParticleAlt;
+}
+
+.particle:nth-child(3n) {
+  animation: particlePulse 4s ease-in-out infinite,
+             floatParticle var(--speed, 15s) ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .particle {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  
+  .particle.floating {
+    animation-duration: calc(var(--speed, 15s) * 0.7);
+  }
+}
+
+@media (max-width: 480px) {
+  .particle {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  
+  .particleContainer {
+    opacity: 0.7;
+  }
+}
+
+/* High performance mode for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .particle,
+  .particleContainer {
+    animation: none !important;
+    transition: none !important;
+    display: none;
+  }
+}
+
+/* Performance optimizations */
+.particleContainer,
+.particleWrapper,
+.particle {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+  .particle {
+    filter: brightness(1.2) contrast(1.1);
+  }
+}
+
+/* Hover interaction zones */
+.particle:hover {
+  animation-play-state: paused;
+  transform: scale(1.5) !important;
+  transition: transform 0.3s ease;
+}
+
+/* Depth layering */
+.particle:nth-child(4n) {
+  z-index: 2;
+  filter: blur(0.5px);
+}
+
+.particle:nth-child(4n+1) {
+  z-index: 1;
+  filter: blur(1px);
+  opacity: 0.7;
+}
+
+.particle:nth-child(4n+2) {
+  z-index: 3;
+  filter: blur(0px);
+}
+
+.particle:nth-child(4n+3) {
+  z-index: 0;
+  filter: blur(2px);
+  opacity: 0.5;
+}
